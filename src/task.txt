@@ -1,0 +1,59 @@
+Certainly! Here's another Java problem that involves executors, the Java Time API, regular expressions (regex), and logging:
+
+**Problem Statement: model.Event Scheduler**
+
+You are tasked with developing a Java program that reads and processes event data from a file and schedules events based on certain criteria. The input file contains event data in the following format:
+2023-11-03 10:00:00 model.Event: Meeting with Team
+2023-11-03 11:30:00 model.Event: Presentation
+2023-11-03 14:15:00 model.Event: Workshop on Java
+2023-11-03 16:45:00 model.Event: Networking Reception
+
+Your program should perform the following tasks:
+
+1. **Log Parsing**: Parse the event data to extract the date and time, event name, and other details. Use regular expressions to accomplish this.
+
+2. **Time-Based Scheduling**: Schedule events that occur in the future based on their start times. Only events occurring after the current time should be scheduled.
+
+3. **Multithreading**: Process the scheduling of events using an Executor (e.g., ThreadPoolExecutor) with multiple threads to efficiently handle multiple events in parallel.
+
+4. **Logging**: Create a log of the scheduled events and their execution status (e.g., success or failure) and write it to a log file. Use the Java logging framework (e.g., java.util.logging) for this purpose.
+
+Here are specific requirements for your program:
+
+- The program should accept the path to the input event file, the current time, the path to the output log file, and the number of threads in the thread pool as command-line arguments.
+
+- Use regular expressions to extract event information from each line of the input file.
+
+- Use the Java Time API to represent and compare timestamps. Schedule events that occur after the current time.
+
+- Create a thread pool with executors to process event scheduling in parallel. The number of threads in the thread pool should be adjustable as a program parameter.
+
+- Use Java's logging framework to write the scheduled events and their execution status to the output log file.
+
+- Ensure that your program is robust and handles exceptions gracefully, such as file not found or invalid event data.
+
+
+In this example, the program should read event data from "events.txt," schedule events that occur after 12:00:00, and write the results to "output.log" using a thread pool with 4 threads.
+
+Your Java program should demonstrate a good understanding of multithreading, Java Time API, regular expressions, and logging in Java.
+
+
+
+
+Pattern pattern = Pattern.compile("^(\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2})");
+        Matcher matcher = pattern.matcher("2023-11-03 13:53:00 Event: Meeting with Team");
+//        File file = new File("resources/events.txt");
+//        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        long seconds = 0;
+        if (matcher.find()){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            TemporalAccessor accessor = formatter.parse(matcher.group());
+            LocalDateTime from = LocalDateTime.from(accessor);
+            Duration between = Duration.between(LocalDateTime.now(), from);
+            seconds = between.toSeconds();
+        }
+        System.out.println(seconds);
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(3);
+        executor.scheduleAtFixedRate(()->{
+            System.out.println("Welcome to PARTY😎");
+        },-1,15, TimeUnit.SECONDS);

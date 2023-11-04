@@ -1,0 +1,5 @@
+
+2023-11-03 18:21:00 model.Event: Meeting with Team
+2023-11-03 18:22:00 model.Event: Presentation
+2023-11-03 18:23:00 model.Event: Workshop on Java
+2023-11-03 18:24:00 model.Event: Networking Reception
